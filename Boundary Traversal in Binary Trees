@@ -1,0 +1,64 @@
+#include <bits/stdc++.h> 
+/************************************************************
+
+    Following is the Binary Tree node structure:
+    
+    template <typename T>
+    class TreeNode {
+        public :
+        T data;
+        TreeNode<T> *left;
+        TreeNode<T> *right;
+
+        TreeNode(T data) {
+            this -> data = data;
+            left = NULL;
+            right = NULL;
+        }
+
+        ~TreeNode() {
+            if(left)
+                delete left;
+            if(right)
+                delete right;
+        }
+    };
+
+************************************************************/
+void solveLeft(TreeNode<int>* root, vector<int>& res) {
+    if (root == NULL || (root->left == NULL && root->right == NULL)) return;
+    res.push_back(root->data);
+    if (root->left)solveLeft(root->left, res); 
+    else 
+    solveLeft(root->right, res);
+}
+
+void solveRoot(TreeNode<int>*root, vector<int>&res){
+    if(root==NULL)return;
+    if(root->left==NULL&&root->right==NULL){
+        res.push_back(root->data);
+        return;
+    }
+    solveRoot(root->left,res);
+    solveRoot(root->right,res);
+
+}
+void solveRight(TreeNode<int>*root, vector<int>&res){
+    if(root==NULL||(root->left==NULL&&root->right==NULL))return;
+    if(root->right)solveRight(root->right,res);
+    else 
+    solveRight(root->left,res);
+    res.push_back(root->data);
+}
+
+vector<int> traverseBoundary(TreeNode<int>* root) {
+    vector<int> res;
+    if (root == NULL) return res;
+    res.push_back(root->data);
+    if((root->left==NULL&&root->right==NULL))return res;
+    solveLeft(root->left, res);
+    solveRoot(root->left, res);
+    solveRoot(root->right, res);
+    solveRight(root->right, res);
+    return res;
+}
