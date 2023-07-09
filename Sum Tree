@@ -1,0 +1,27 @@
+struct Node
+{
+    int data;
+    Node* left, * right;
+}; */
+
+// Should return true if tree is Sum Tree, else false
+class Solution
+{
+    public:
+    int solve(Node*root){
+        if(!root)return 0;
+        else if(!root->left&&!root->right)return root->data;
+        int left = solve(root->left);
+        int right = solve(root->right);
+        int temp = left+right;
+        if(root->data==temp) return root->data+temp;
+        return INT_MIN;
+    }
+    bool isSumTree(Node* root)
+    {
+        if(!root->left&&!root->right)return 1;
+        int ans = solve(root);
+        if(ans==INT_MIN)return false;
+        return true;
+    }
+};
