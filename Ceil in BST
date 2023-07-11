@@ -1,0 +1,16 @@
+void solve(Node*root, int val, int&c){https://www.geeksforgeeks.org/geek-olympics-2023
+    if(!root)return;
+    if(root->data>=val){
+        c = root->data;
+        solve(root->left, val, c);
+    }
+    else if(root->data<val)solve(root->right, val,c);
+}
+
+
+int findCeil(Node* root, int input) {
+    if (root == NULL) return -1;
+    int ceil = -1;
+    solve(root, input, ceil);
+    return ceil;
+}
